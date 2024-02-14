@@ -4,6 +4,7 @@
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { NewsArticle, NewsResponse } from '@/models/NewsArticles';
+import NewsArticleEntry from '@/components/NewsArticle/NewsArticleEntry';
 
 interface BreakingNewsPageProps {
   newsArticles:NewsArticle[]
@@ -16,8 +17,6 @@ export const getServerSideProps:GetServerSideProps<BreakingNewsPageProps> = asyn
 };
 
 export default function BreakingNewsPage({ newsArticles }:BreakingNewsPageProps) {
-  console.log('next');
-
   return (
     <>
       {/* <Welcome /> */}
@@ -28,7 +27,7 @@ export default function BreakingNewsPage({ newsArticles }:BreakingNewsPageProps)
 
       <main>
         <h1>Breaking News</h1>
-        {JSON.stringify(newsArticles)}
+         <NewsArticleEntry article={newsArticles[1]} />
       </main>
     </>
   );
