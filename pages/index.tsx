@@ -3,15 +3,18 @@
 
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
+import { Container } from '@mantine/core';
 import { NewsArticle, NewsResponse } from '@/models/NewsArticles';
 import NewsArticleEntry from '@/components/NewsArticle/NewsArticleEntry';
+import NewsArticleCard from '@/components/NewsArticlesCard/NewsArticleCard';
 
 interface BreakingNewsPageProps {
   newsArticles:NewsArticle[]
 }
+const API = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${process.env.NEWS_API_KEY}`;
 
 export const getServerSideProps:GetServerSideProps<BreakingNewsPageProps> = async () => {
- const response = await fetch(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${process.env.NEWS_API_KEY}`);
+ const response = await fetch(API);
  const newsResponse:NewsResponse = await response.json();
  return { props: { newsArticles: newsResponse.articles } };
 };
@@ -27,7 +30,10 @@ export default function BreakingNewsPage({ newsArticles }:BreakingNewsPageProps)
 
       <main>
         <h1>Breaking News</h1>
-         <NewsArticleEntry article={newsArticles[1]} />
+        <Container fluid>
+         <NewsArticleCard article={newsArticles} />
+
+        </Container>
       </main>
     </>
   );
